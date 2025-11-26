@@ -1,0 +1,10 @@
+tests:
+    test_1:
+        parameters:
+            cep: "57160000"
+    test_2:
+        parameters:
+            cep: "57038-635"
+    test_3:
+        parameters:
+            cep: "57160-000"
