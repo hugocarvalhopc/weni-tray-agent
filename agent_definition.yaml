@@ -1,5 +1,15 @@
 agents:
     agente_status_do_pedido:
+        credentials:
+            WENI_API_KEY:
+                label: "Chave de API da Weni"
+                placeholder: "Insira a chave de API da Weni"
+            WENI_API_BASE_URL:
+                label: "URL base da API da Weni"
+                placeholder: "Insira a URL base da API da Weni"
+            TRAY_URL:
+                label: "URL de API da Tray"
+                placeholder: "Insira a URL de API da Tray"
         name: "Agente de Status do Pedido"
         description: "Use este Agente especializado em consulta de pedidos por ID quando o usuário quiser saber mais sobre como está o seu pedido."
         instructions:
