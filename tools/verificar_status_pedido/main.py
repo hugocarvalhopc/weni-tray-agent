@@ -5,14 +5,14 @@ import requests
 
 
 class VerificarStatusPedido(Tool):
-    def run(self, context: Context) -> TextResponse:
+    def execute(self, context: Context) -> TextResponse:
         self.weni_api_key = context.credentials.get("WENI_API_KEY")
         self.tray_url = context.credentials.get("TRAY_URL")
         self.weni_api_base_url = context.credentials.get("WENI_API_BASE_URL")
-        self.id_do_pedido = context.parameters.get("id_do_pedido", "")
+        self.id_do_pedido = context.parameters.get("id_do_pedido")
 
         result = self.tray_order_verifier()
-        return TextResponse(text=str(result))
+        return TextResponse(data=result)
 
 
     def get_credentials_in_weni(self):
@@ -27,7 +27,6 @@ class VerificarStatusPedido(Tool):
             response.raise_for_status()
             data = response.json()
         except Exception as e:
-            print(f"Error getting credentials from Weni: {e}")
             return None, None
         
         access_token = None
@@ -85,9 +84,7 @@ class VerificarStatusPedido(Tool):
 
             return access_token, refresh_token
         except Exception as e:
-            print(f"Error in tray_refresh_auth(): {e}")
             return None, None
-
 
     def tray_order_verifier(self, retry=True):
         access_token, refresh_token = self.get_credentials_in_weni()
@@ -102,7 +99,6 @@ class VerificarStatusPedido(Tool):
             
             if response.status_code == 401:
                 if retry:
-                    print("Token expired, refreshing...")
                     new_access_token, new_refresh_token = self.tray_refresh_auth(refresh_token)
                     
                     if new_access_token and new_refresh_token:
